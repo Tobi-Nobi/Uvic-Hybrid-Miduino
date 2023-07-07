@@ -48,6 +48,11 @@ byte Shift_Down[1] = {0x00};
 #define Throttle_Pin ## // Throttle
 byte Throttle[1] = {0x00};
 
+// GetCAN IDs for functions that produce an output
+#define accelerator_id = #x##
+#define Shift_Up_id = #x##
+#define Shift_Down_id = #x##
+
 
 
 
@@ -84,9 +89,9 @@ void setup() {
   pinMode(Fan_Pin, INPUT);
   pinMode(Brake_Pin, INPUT);
   pinMode(Start_Pin, INPUT);
-  pinMode(Shift_Up_Pin, INPUT);
-  pinMode(Shift_Down_Pin, INPUT);
-  pinMode(Throttle_Pin, INPUT);
+  pinMode(Shift_Up_Pin, OUTPUT);
+  pinMode(Shift_Down_Pin, OUTPUT);
+  pinMode(Throttle_Pin, OUTPUT);
   
 }
 
@@ -97,13 +102,28 @@ void loop() {
 
   unsigned long canId = CAN.getCanId();
 
+  // output functions
+  switch(canId) {
+     case accelerator_id:
+          throttle();
+          break;
+     
+     case Shift_Up_id:
+          Shift_up();
+          break;
+
+     case Shift_Down_id:
+          Shift_Down();
+          break;
+
+     default:
+          break;
+
+  // input functions
   Fuel_Pump_Check();
   Fan_Check();
   Brake_Check();
   Start_Check();
-  Shift_Up();
-  Shift_Down();
-  Throttle();
 
   can_delay_cycle = millis() - can_timeold;
   if (can_delay_cycle >= CAN_MSG_DELAY) message_cycle();
@@ -111,6 +131,7 @@ void loop() {
 
 /********** Function Implementations ***************/
 /* Below, put any of your function implementations*/
+
 
 Fuel_Pump_Check();
 {
@@ -144,11 +165,7 @@ Shift_Down();
 
 Throttle();
 { 
-  if(canId == Throttle_pin){
-    // Checks accelerator position and informs throttle, Store Throttle[0] = {#x##}
-  }else{
-    return;
-  }
+  // Checks accelerator position outputs to throttle, store Throttle[0] = {#x##}
 }
 
 /* 
