@@ -26,26 +26,39 @@ int message_num = 0;
 /* Below, define any constants or variables you might need for
    passing data through CAN. Any variables specific to a function
    implementation should be defined within your function.*/
-
-#define Fuel_Pin ## // signal for Fuel_Pump
+#define Fuel_MAX ##
+#define Fuel_MIN ##
+#define Fuel_PIN ## // signal for Fuel_Pump
 byte Fuel_Pump_OK[1] = {0x00};
 
-#define Fan_Pin ## // signal for Fan
+#define Fan_MAX ##
+#define Fan_MIN ##
+#define Fan_PIN ## // signal for Fan
 byte Fan_OK[1] = {0x00};
 
-#define Brake_Pin ## // signal for Brake
+#define Brake_MAX ##
+#define Brake_MIN ##
+#define Brake_PIN ## // signal for Brake
 byte Brake_OK[1] = {0x00};
 
-#define Start_Pin ## // signal for Start
+#define Start_MAX ##
+#define Start_MIN ##
+#define Start_PIN ## // signal for Start
 byte Start_OK[1] = {0x00};
 
-#define Shift_Up_Pin ## // signal for shift up
+#define Shift_Up_MAX ##
+#define Shift_Up_MIN ##
+#define Shift_Up_PIN ## // signal for shift up
 byte Shift_Up[1] = {0x00};
 
-#define Shift_Down_Pin ## // signal for shift up
+#define Shift_Down_MAX ##
+#define Shift_Down_MIN ##
+#define Shift_Down_PIN ## // signal for shift up
 byte Shift_Down[1] = {0x00};
 
-#define Throttle_Pin ## // Throttle
+#define Throttle_MAX ##
+#define Throttle_MIN ##
+#define Throttle_PIN ## // Throttle
 byte Throttle[1] = {0x00};
 
 // GetCAN IDs for functions that produce an output
@@ -132,40 +145,66 @@ void loop() {
 /********** Function Implementations ***************/
 /* Below, put any of your function implementations*/
 
-
+  // Checks fuel Pump Status
 Fuel_Pump_Check();
 {
-  // Checks fuel pump status, store value Fuel_Pump_OK[0] = {#x##}
+  int Fuel_Read = analogRead(Fuel_PIN)
+
+  int Fuel_Corr = Fuel_Read - Fuel_min
+
+  int Fuel_Percent = (100 * Fuel_Corr) / Fuel_Max;
+  Fuel_Data[0] = Fuel_Percent & 0xff;
 }
 
+  // Checks fan status, store value Fan_OK[0] = {#x##}  
 Fan_Check();
 {
-  // Checks fan status, store value Fan_OK[0] = {#x##}
+  int Fan_Read = analogRead(Fan_PIN)
+
+  int Fan_Corr = Fan_Read - Fan_min
+
+  int Fan_Percent = (100 * Fan_Corr) / Fan_Max;
+  Fan_Data[0] = Fan_Percent & 0xff;
 }
 
+  // Checks brake status, store value Brake_OK[0] = {#x##}
 Brake_Check();
 {
-  // Checks brake status, store value Brake_OK[0] = {#x##}
+  int Brake_Read = analogRead(Brake_PIN)
+
+  int Brake_Corr = Brake_Read - Brake_min
+
+  int Brake_Percent = (100 * Brake_Corr) / Brake_Max;
+  Brake_Data[0] = Brake_Percent & 0xff;
 }
 
+  // Checks start status, store value Start_OK[0] = {#x##}
 Start_Check();
 {
-  // Checks start status, store value Start_OK[0] = {#x##}
+  int Start_Read = analogRead(Start_PIN)
+
+  int Start_Corr = Start_Read - Start_min
+
+  int Start_Percent = (100 * Start_Corr) / Start_Max;
+  Start_Data[0] = Start_Percent & 0xff;
 }
 
+  // Checks if shift up button is pressed, store Shift_Up[0] = {#x##}
 Shift_Up();
 {
-  // Checks if shift up button is pressed, store Shift_Up[0] = {#x##}
+  int Shift_Up_Read = analogRead(Shift_Up_PIN)
 }
 
+  // Checks if shift down button is pressed, store Shift_Down[0] = {#x##}
 Shift_Down();
 {
-  // Checks if shift down button is pressed, store Shift_Down[0] = {#x##}
+  int Shift_Down_Read = analogRead(Shift_Down_PIN)
 }
 
+  // Checks accelerator position outputs to throttle, store Throttle[0] = {#x##}
 Throttle();
 { 
-  // Checks accelerator position outputs to throttle, store Throttle[0] = {#x##}
+  int Throttle_Read = analogRead(Throttle_PIN)
 }
 
 /* 
@@ -253,6 +292,9 @@ void message_cycle()
       //reset message number if issue is encountered.
       message_num = 0;
   }
+
+  can_timeold = millis();
+}
 
   can_timeold = millis();
 }
