@@ -1,0 +1,21 @@
+
+#define LEM_Max 8
+#define LEM_Min 0
+#define LEM_PIN ## // signal for LEM_DHAB
+byte LEM_Data[1] = {0x00};
+
+void LEM_FUNC();
+
+LEM_FUNC():
+{
+  // Reads voltage output from sensor
+  int LEM_Read = analogRead(LEM_PIN);
+
+  if(LEM_Read < Lem_Min || LEM_Read > Lem_Max){
+      // Offset to fit Min-Max Values
+  }
+  
+  int LEM_Percent = (100 * LEM_Read) / LEM_Max;
+  Lem_Data[0] = LEM_Percent & 0xff;
+  
+}
