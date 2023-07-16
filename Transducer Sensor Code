@@ -11,10 +11,7 @@ LEM_FUNC():
   // Reads voltage output from sensor
   int LEM_Read = analogRead(LEM_PIN);
 
-  if(LEM_Read < Lem_Min || LEM_Read > Lem_Max){
-      // Offset to fit Min-Max Values
-  }
-  
+  // Turns voltage to a percentage then stores value
   int LEM_Percent = (100 * LEM_Read) / LEM_Max;
   Lem_Data[0] = LEM_Percent & 0xff;
   
