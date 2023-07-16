@@ -13,7 +13,7 @@ LEM_FUNC():
   int LEM_Corr_Read = LEM_Read - LEM_MIN
 
   
-  int LEM_Percent = (100 * LEM_Read) / LEM_Max;
+  int LEM_Percent = (100 * LEM_Corr_Read) / LEM_Max;
   Lem_Data[0] = LEM_Percent & 0xff;
   
 }
