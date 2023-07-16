@@ -26,38 +26,38 @@ int message_num = 0;
 /* Below, define any constants or variables you might need for
    passing data through CAN. Any variables specific to a function
    implementation should be defined within your function.*/
-#define Fuel_MAX ##
-#define Fuel_MIN ##
+#define Fuel_MIN 0
+#define Fuel_MAX 1023
 #define Fuel_PIN ## // signal for Fuel_Pump
 byte Fuel_Pump_OK[1] = {0x00};
 
-#define Fan_MAX ##
-#define Fan_MIN ##
+#define Fan_MIN 0
+#define Fan_MAX 1023
 #define Fan_PIN ## // signal for Fan
 byte Fan_OK[1] = {0x00};
 
-#define Brake_MAX ##
-#define Brake_MIN ##
+#define Brake_MIN 0
+#define Brake_MAX 1023
 #define Brake_PIN ## // signal for Brake
 byte Brake_OK[1] = {0x00};
 
-#define Start_MAX ##
-#define Start_MIN ##
+#define Start_MIN 0
+#define Start_MAX 1
 #define Start_PIN ## // signal for Start
 byte Start_OK[1] = {0x00};
 
-#define Shift_Up_MAX ##
-#define Shift_Up_MIN ##
+#define Shift_Up_MIN 0
+#define Shift_Up_MAX 1
 #define Shift_Up_PIN ## // signal for shift up
 byte Shift_Up[1] = {0x00};
 
-#define Shift_Down_MAX ##
-#define Shift_Down_MIN ##
+#define Shift_Down_MIN 0
+#define Shift_Down_MAX 1
 #define Shift_Down_PIN ## // signal for shift up
 byte Shift_Down[1] = {0x00};
 
-#define Throttle_MAX ##
-#define Throttle_MIN ##
+#define Throttle_MIN 0
+#define Throttle_MAX 1023
 #define Throttle_PIN ## // Throttle
 byte Throttle[1] = {0x00};
 
@@ -292,9 +292,6 @@ void message_cycle()
       //reset message number if issue is encountered.
       message_num = 0;
   }
-
-  can_timeold = millis();
-}
 
   can_timeold = millis();
 }
