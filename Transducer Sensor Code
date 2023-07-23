@@ -1,19 +1,22 @@
-#define LEM_MIN 0
-#define LEM_MAX 1023
+// Reading for AUTOMOTIVE CURRENT TRANSDUCER DHAB S/18
 
-#define LEM_PIN ## // signal for LEM_DHAB
-byte LEM_Data[1] = {0x00};
+#define GLV_MIN 0
+#define GLV_MAX 1023
 
-void LEM_FUNC();
+#define GLV_PIN ## // signal for LEM_DHAB
+byte GLV_Data[1] = {0x00};
 
-LEM_FUNC():
+
+void GLV_status();
+
+GLV_status():
 {
   // Reads voltage output from sensor
-  int LEM_Read = analogRead(LEM_PIN);
-  int LEM_Corr_Read = LEM_Read - LEM_MIN
+  int GLV_current_read = analogRead(GLV_PIN);
+  int GLV_correction_read = GLV_current_read - GLV_MIN
 
   
-  int LEM_Percent = (100 * LEM_Corr_Read) / LEM_Max;
-  Lem_Data[0] = LEM_Percent & 0xff;
+  int GLV_Percent = (100 * GLV_correction_read) / (GLV_MAX - GLV_MIN);
+  GLV_Data[0] = GLV_Percent & 0xff;
   
 }
