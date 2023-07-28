@@ -1,22 +1,22 @@
 // Reading for AUTOMOTIVE CURRENT TRANSDUCER DHAB S/18
 
-#define GLV_MIN 0
-#define GLV_MAX 1023
+#define GLV_current_sensor_MIN 0
+#define GLV_current_sensor_MAX 1023
 
-#define GLV_PIN ## // signal for LEM_DHAB
-byte GLV_Data[1] = {0x00};
+#define GLV_current_sensor_PIN ## // signal for LEM_DHAB
+byte GLV_current_sensor_Data[1] = {0x00};
 
 
-void GLV_status();
+void GLV_current_sensor_status();
 
-GLV_status():
+GLV_current_sensor_status():
 {
   // Reads voltage output from sensor
-  int GLV_current_read = analogRead(GLV_PIN);
-  int GLV_correction_read = GLV_current_read - GLV_MIN
+  int GLV_current_read = analogRead(GLV_current_sensor_PIN);
+  int GLV_correction_read = GLV_current_read - GLV_current_sensor_MIN
 
   
-  int GLV_Percent = (100 * GLV_correction_read) / (GLV_MAX - GLV_MIN);
-  GLV_Data[0] = GLV_Percent & 0xff;
+  int GLV_current_sensor_Percent = (100 * GLV_correction_read) / (GLV_current_sensor_MAX - GLV_current_sensor_MIN);
+  GLV_current_sensor_Data[0] = GLV_current_sensor_Percent & 0xff;
   
 }
