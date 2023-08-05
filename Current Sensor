@@ -75,9 +75,6 @@ void GLV_current_sensor_status()
   float GLV_current_sensor_current = (GLV_current_sensor_voltage - 2.5)*(1/0.0667);
 
   //GLV_current_sensor_Data[0] = GLV_current_sensor_current & 0xff;
-  Serial.println(analogRead(GLV_current_sensor_PIN));
-  Serial.println(GLV_correction_read);
-  Serial.println(GLV_current_sensor_current);
   
 }
  
