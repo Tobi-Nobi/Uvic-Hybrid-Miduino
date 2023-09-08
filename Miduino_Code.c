@@ -227,7 +227,7 @@ Shift_Down();
 Throttle();
 { 
 
-  int acellerator_position = ((accelerator_id / 100) * 255);
+  int acellerator_position = ((accelerator_id / 100.0) * 255);
   analogwrite(Throttle, acellerator_id);
 
 }
