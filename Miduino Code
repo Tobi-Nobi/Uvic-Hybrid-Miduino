@@ -51,7 +51,7 @@ byte Shift_Down[1] = {0x00};
 
 #define Throttle_MIN 0
 #define Throttle_MAX 1023
-#define Throttle_PIN ## // Throttle
+#define Throttle_output_PIN # // Throttle
 byte Throttle[1] = {0x00};
 
 // GetCAN IDs for functions that produce an output
@@ -211,22 +211,25 @@ Start_Check();
   Start_Data[0] = Start_Percent & 0xff;
 }
 
-  // Checks if shift up button is pressed, store Shift_Up[0] = {#x##}
+  // Checks if shift up button is pressed
 Shift_Up();
 {
-  int Shift_Up_Read = analogRead(Shift_Up_PIN)
+  int Shift_Up_Read = digitalRead(Shift_Up_PIN)
 }
 
-  // Checks if shift down button is pressed, store Shift_Down[0] = {#x##}
+  // Checks if shift down button is pressed
 Shift_Down();
 {
-  int Shift_Down_Read = analogRead(Shift_Down_PIN)
+  int Shift_Down_Read = digitalRead(Shift_Down_PIN)
 }
 
-  // Checks accelerator position outputs to throttle, store Throttle[0] = {#x##}
+  // Checks accelerator position outputs to throttle, sends PWM function through Throttle pin
 Throttle();
 { 
-  int Throttle_Read = analogRead(Throttle_PIN)
+
+  int acellerator_position = ((accelerator_id / 100) * 255);
+  analogwrite(Throttle, acellerator_id);
+
 }
 
 /* 
