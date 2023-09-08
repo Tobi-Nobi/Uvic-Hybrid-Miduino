@@ -55,7 +55,8 @@ byte Shift_Down[1] = {0x00};
 byte Throttle[1] = {0x00};
 
 // GetCAN IDs for functions that produce an output
-#define accelerator_id = #x##
+unsigned char Acellerator_percentage;
+can.readMsgBuf( 1, &Acellerator_percentage);
 #define Shift_Up_id = #x##
 #define Shift_Down_id = #x##
 
@@ -112,7 +113,7 @@ void loop() {
 
   // output functions
   switch(canId) {
-     case accelerator_id:
+     case accelerator_Percentage:
           throttle();
           break;
      
@@ -226,7 +227,7 @@ Shift_Down();
   // Checks accelerator position outputs to throttle, sends PWM function through Throttle pin
 Throttle();
 { 
-
+  
   int acellerator_position = ((accelerator_id / 100.0) * 255);
   analogwrite(Throttle, acellerator_id);
 
